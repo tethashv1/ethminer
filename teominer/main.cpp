@@ -1,3 +1,9 @@
+/*  This is revised for TEO (TrustEthReOrigin) blockchain
+    Appied TETHashV1 (TrustETHASH Version 1) algorithm applied for ASIC Resistance mining
+    - teominer
+    Any of modified source code copyright is within (c)TAO.Foundation
+    License term follows GPL V3
+*/
 /*
     This file is part of ethminer.
 
@@ -17,7 +23,7 @@
 
 #include <CLI/CLI.hpp>
 
-#include <ethminer/buildinfo.h>
+#include <teominer/buildinfo.h>
 
 #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
@@ -53,7 +59,7 @@ struct MiningChannel : public LogChannel
 #define minelog clog(MiningChannel)
 
 #if ETH_DBUS
-#include <ethminer/DBusInt.h>
+#include <teominer/DBusInt.h>
 #endif
 
 bool g_running = false;
@@ -196,7 +202,7 @@ public:
         const char* CUDAGroup = "CUDA Options";
 #endif
 
-        CLI::App app("Ethminer - GPU Ethereum miner");
+        CLI::App app("TEOminer - GPU TEO(Trust Eth ReOrigin) miner");
 
         bool help = false;
         app.set_help_flag();
@@ -509,8 +515,8 @@ public:
             }
             else if (version)
             {
-                auto* bi = ethminer_get_buildinfo();
-                cerr << "\nethminer " << bi->project_version << "\nBuild: " << bi->system_name
+                auto* bi = teominer_get_buildinfo();
+                cerr << "\nteominer " << bi->project_version << "\nBuild: " << bi->system_name
                      << "/" << bi->build_type << "/" << bi->compiler_id << "\n\n";
                 exit(0);
             }
@@ -646,8 +652,8 @@ public:
             exit(0);
         }
 
-        auto* build = ethminer_get_buildinfo();
-        minelog << "ethminer " << build->project_version;
+        auto* build = teominer_get_buildinfo();
+        minelog << "teominer " << build->project_version;
         minelog << "Build: " << build->system_name << "/" << build->build_type;
 
         if (m_minerType == MinerType::CL || m_minerType == MinerType::Mixed)
@@ -958,7 +964,7 @@ private:
     vector<unsigned> m_openclDevices;
     unsigned m_globalWorkSizeMultiplier = CLMiner::c_defaultGlobalWorkSizeMultiplier;
     unsigned m_localWorkSize = CLMiner::c_defaultLocalWorkSize;
-    bool m_noBinary = false;
+    bool m_noBinary = true; // false;   // cpplover. for TETHASHV1 , AMD OpenCL Loads from .cl files, and runtime compile
 #endif
 #if ETH_ETHASHCUDA
     unsigned m_cudaDeviceCount = 0;
